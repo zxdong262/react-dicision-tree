@@ -1091,4 +1091,4 @@ const data = {
   "code": 0
 }
 
-export default data
+module.exports = exports.default = data
