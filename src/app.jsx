@@ -1,15 +1,11 @@
-import React, { Component, PropTypes } from 'react'
-import Lib from './example-lib.jsx'
-
+import React, { Component } from 'react'
+import Lib from './react-dicision-tree'
+import data from './test.data'
 export default class App extends Component {
 
-	constructor(props) {
-		super(props)
-		this.state = {
-			a: 0,
-			b: 1
-		}
-	}
+	state = {
+    data
+  }
 
 	render() {
 

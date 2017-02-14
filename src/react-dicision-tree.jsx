@@ -89,9 +89,7 @@ export default class ResultTreeModel extends React.Component {
   recDicisionTree = (root, level = 0, className = '', condition, side = '', parentId = '') => {
     let {showChildrenMap} = this.state
     let id = parentId + '-' + level + '_' + side
-    let {children, label} = root
-    let labelText = label || _.get(children, '[0].condition.attributeName')
-    let hasChildren = children.length
+    let {children, label, splitType, value} = root
     let childrenVisible = showChildrenMap[id]
     let cls = 'd-tree-cell ' +
       `d-tree-lv${level}` +
@@ -104,14 +102,14 @@ export default class ResultTreeModel extends React.Component {
     } else if (label === 'N') {
       labelDom = <span className="color-red">{label}</span>
     } else {
-      labelDom = labelText
+      labelDom = label
     }
     
     return (
       <div className={cls}>
         <div>
           <span className="d-tree-label">
-            {condition && this.renderCondition(condition)}
+            {condition ? this.renderCondition(condition) : null}
             <span className="d-tree-label-text iblock elli">
               {this.renderCaret(side, hasChildren, id)}
               <Tooltip title={labelText}>
@@ -122,7 +120,7 @@ export default class ResultTreeModel extends React.Component {
         </div>
         {
           hasChildren ? this.recDicisionTree(
-            children[0].child,
+            children[0],
             level + 1,
             'd-tree-child d-tree-cell-0',
             children[0].condition,
@@ -132,7 +130,7 @@ export default class ResultTreeModel extends React.Component {
         }
         {
           hasChildren ? this.recDicisionTree(
-            children[1].child,
+            children[1],
             level + 1,
             'd-tree-child d-tree-cell-1',
             children[1].condition,
