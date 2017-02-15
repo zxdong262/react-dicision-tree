@@ -1,24 +1,18 @@
 import React, {PropTypes} from 'react'
-import _ from 'lodash'
-import {Spin, Tabs, Icon, Tooltip, Radio, Row, Col} from 'antd'
-const RadioGroup = Radio.Group
-const RadioButton = Radio.Button
-const conditionMap = {
-  greater: '>',
-  less_equals: '≤'
-}
 
-export default class ResultTreeModel extends React.Component {
+export default class DicisionTree extends React.Component {
 
 	static propTypes = {
 		data: PropTypes.object.isRequired,
     showAllChildren: PropTypes.bool,
     caretRender: PropTypes.func,
     conditionRender: PropTypes.func,
-
+    renderYesLabel: PropTypes.func,
+    renderNoLabel: PropTypes.func,
+    renderTitle: PropTypes.func
 	}
 
-	static default = {
+	static defaultProps = {
     showAllChildren: false
 	}
 
@@ -40,10 +34,10 @@ export default class ResultTreeModel extends React.Component {
   renderCondition = (condition) => {
 
     let {splitType, value} = condition
-    let cls = 'd-tree-condition iblock color-grey elli'
+    let cls = 'dtree-condition'
     return (
       <span>
-        <span className="d-tree-condition-line" />
+        <span className="dtree-condition-line" />
         <span className={cls}>{conditionMap[splitType]} {value}</span>
       </span>
     )
@@ -58,49 +52,54 @@ export default class ResultTreeModel extends React.Component {
     })
   }
 
-  renderCaret = (side, hasChildren, id) => {
-    if (side === 1 || !hasChildren) return null
+  renderCaret = (side, children, id, toggleChildrenVisible) => {
+    if (side === 1 || !children) return null
     let visible = this.state.showChildrenMap[id]
     let title = visible ? '收起' : '展开'
-    let type = visible ? 'caret-up' : 'caret-down'
+    let type = visible ? '▲' : '▲'
     return (
-      <Tooltip title={title}>
-        <Icon
-          type={type}
-          className="mg1r pointer color-grey iblock"
-          onClick={() => this.toggleChildrenVisible(id)}
-        />
-      </Tooltip>
+      <span
+        title={title}
+        type={type}
+        className="dtree-caret"
+        onClick={() => toggleChildrenVisible(id)}
+      >{type}</span>
     )
   }
 
-  renderLabel = label => {
-    let labelDom
-    if (label === 'Y') {
-      labelDom = <span className="color-green">{label}</span>
-    } else if (label === 'N') {
-      labelDom = <span className="color-red">{label}</span>
-    } else {
-      labelDom = labelText
-    }
-    return
+  renderYesLabel = label => {
+    return <span className="dtree-color-green">{label}</span>
   }
 
-  recDicisionTree = (root, level = 0, className = '', condition, side = '', parentId = '') => {
+  renderNoLabel = label => {
+    return <span className="dtree-color-red">{label}</span>
+  }
+
+  renderTitle = (labelText, labelDom) => {
+    return <b title={labelText}>{labelDom}</b>
+  }
+
+  recDicisionTree = (root, level = 0, className = '', side = '', parentId = '') => {
     let {showChildrenMap} = this.state
+    let {
+      renderNoLabel = this.renderNoLabel,
+      renderYesLabel = this.renderYesLabel,
+      renderCaret = this.renderCaret,
+      renderTitle = this.renderTitle
+    } = this.props
     let id = parentId + '-' + level + '_' + side
     let {children, label, splitType, value} = root
     let childrenVisible = showChildrenMap[id]
-    let cls = 'd-tree-cell ' +
-      `d-tree-lv${level}` +
-      ` ${className} ${hasChildren ? 'has-children' : 'no-children'}` +
-      `${childrenVisible ? ' d-tree-children-visible' : ''}`
+    let cls = 'dtree-cell ' +
+      `dtree-lv${level}` +
+      ` ${className} ${chhildren ? 'has-children' : 'no-children'}` +
+      `${childrenVisible ? ' dtree-children-visible' : ''}`
 
     let labelDom
     if (label === 'Y') {
-      labelDom = <span className="color-green">{label}</span>
+      labelDom = renderYesLabel(label)
     } else if (label === 'N') {
-      labelDom = <span className="color-red">{label}</span>
+      labelDom = renderNoLabel(label)
     } else {
       labelDom = label
     }
@@ -108,32 +107,28 @@ export default class ResultTreeModel extends React.Component {
     return (
       <div className={cls}>
         <div>
-          <span className="d-tree-label">
+          <span className="dtree-label">
             {condition ? this.renderCondition(condition) : null}
-            <span className="d-tree-label-text iblock elli">
-              {this.renderCaret(side, hasChildren, id)}
-              <Tooltip title={labelText}>
-                <b>{labelDom}</b>
-              </Tooltip>
+            <span className="dtree-label-text iblock elli">
+              {renderCaret(side, children, id, this.toggleChildrenVisible)}
+              {renderTitle(labelText, labelDom)}
             </span>
           </span>
         </div>
         {
-          hasChildren ? this.recDicisionTree(
+          children ? this.recDicisionTree(
             children[0],
             level + 1,
-            'd-tree-child d-tree-cell-0',
-            children[0].condition,
+            'dtree-child dtree-cell-0',
             0,
             id
           ) : null
         }
         {
-          hasChildren ? this.recDicisionTree(
+          children ? this.recDicisionTree(
             children[1],
             level + 1,
-            'd-tree-child d-tree-cell-1',
-            children[1].condition,
+            'dtree-child dtree-cell-1',
             1,
             id
           ) : null
@@ -143,7 +138,7 @@ export default class ResultTreeModel extends React.Component {
   }
 
   render () {
-    return <div className="tree-wrapper">{this.renderTree()}</div>
+    return <div className="dtree-wrapper">{this.renderTree()}</div>
   }
 
 }
