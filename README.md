@@ -28,24 +28,24 @@ import 'react-dicision-tree/dist/react-dicision-tree.min.css'
 // or just style it yourself
 export default class App extends Component {
 
-	state = {
+  state = {
     data: {}
   }
 
-	render() {
+  render() {
 
-		return (
-			<div style={{
+    return (
+      <div style={{
         minHeight: 5000,
         position: 'relative'
       }}>
-				<DTree 
+        <DTree 
          data={this.state.data}
         />
-			</div>
-		)
-	}
-	
+      </div>
+    )
+  }
+  
 }
 ```
 check [test.data.js](src/test.data.js) for data structure
