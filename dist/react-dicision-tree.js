@@ -228,7 +228,7 @@ var DicisionTree = function (_React$Component) {
             _this.renderCondition(root),
             _react2.default.createElement(
               'span',
-              { className: 'dtree-label-text iblock elli' },
+              { className: 'dtree-label-text' },
               renderCaret(side, children, id, _this.toggleChildrenVisible),
               renderTitle(label, labelDom)
             )

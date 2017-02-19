@@ -111,7 +111,7 @@ class DicisionTree extends React.Component {
         <div>
           <span className="dtree-label">
             {this.renderCondition(root)}
-            <span className="dtree-label-text iblock elli">
+            <span className="dtree-label-text">
               {renderCaret(side, children, id, this.toggleChildrenVisible)}
               {renderTitle(label, labelDom)}
             </span>
