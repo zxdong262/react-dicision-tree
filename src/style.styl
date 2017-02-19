@@ -1,0 +1,82 @@
+
+.dtree-label
+  display: inline-block
+  position: relative
+  background: #fff
+
+.dtree-label-text
+  display: inline-block
+  padding 10px 6px
+  width 140px
+
+.dtree-condition-txt
+  position: relative
+  display: inline-block
+  z-index 10
+
+.dtree-condition-line
+  content: ''
+  position: absolute
+  right: -30px
+  height: 70px
+  top: -43px
+  border-left: 1px solid #aaa
+  transform: rotate(55deg)
+  z-index 9
+
+.dtree-condition
+  position: absolute
+  background: #fafafa
+  border-radius: 3px
+  right: -50px
+  top: -20px
+  z-index 10
+  overflow: visible
+
+.dtree-child
+  margin-left 30px
+
+.dtree-lv0
+  margin-left 400px
+  position: relative
+.dtree-child
+  position: absolute
+  top 60px
+.dtree-cell-0
+  right 140px
+  >.dtree-child
+    display: none
+  &.dtree-children-visible > .dtree-child
+    display: block
+    z-index 20
+
+  > div > .dtree-label > .dtree-label-text
+    text-align: right
+.dtree-cell-1
+  left 0
+  > div > .dtree-label > .dtree-label-text
+    text-align: center
+  > div > .dtree-label > span > .dtree-condition
+    right auto
+    left 40px
+  > div > .dtree-label > span > .dtree-condition-line
+      transform: rotate(-30deg)
+      right: auto
+      left 55px
+      top: -30px
+      height 40px
+
+.dtree-cell
+  border-radius 3px
+  width 140px
+
+.dtree-color-green
+  color: green
+
+.dtree-color-red
+  color: red
+
+.dtree-caret
+  cursor: pointer
+  &:hover
+    color #08c

@@ -18,7 +18,7 @@ module.exports = function(config) {
       'node_modules/react-dom/dist/react-dom.js',
       'node_modules/jquery/dist/jquery.js',
       {
-        pattern: './dist/add.js', //only for watch
+        pattern: './dist/react-dicision-tree.js', //only for watch
         included: false,
         watched: true
       },
@@ -58,7 +58,7 @@ module.exports = function(config) {
 
     preprocessors: {
       'test/test.js': ['webpack', 'sourcemap', 'coverage'],
-      'dist/add.js': ['coverage']
+      'dist/react-dicision-tree.js': ['coverage']
     },
 
     webpack: {
@@ -66,7 +66,7 @@ module.exports = function(config) {
       ,externals: {
         'react': 'React',
         'react-dom': 'ReactDOM',
-        'add': 'Add'
+        'add': 'ReactDicisionTree'
       },
       module: {
         rules: [
@@ -76,7 +76,7 @@ module.exports = function(config) {
             use: ['babel-loader']
           },
           { //delays coverage til after tests are run, fixing transpiled source coverage error
-            test: /\add\.js$/,
+            test: /\react\-dicision\-tree\.js$/,
             enforce: 'post',
             exclude: /(test|node_modules)\//,
             include: ['dist'],

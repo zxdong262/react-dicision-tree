@@ -2,14 +2,15 @@
   "name": "react-dicision-tree",
   "version": "0.0.1",
   "description": "react dicision tree component",
-  "main": "dist/react-dicision-tree.js",
+  "main": "dist/react-dicision-tree.min.js",
   "scripts": {
     "build": "NODE_ENV=production ./node_modules/.bin/webpack -p",
     "start": "./node_modules/.bin/run-p dev:server dev:client build",
     "dev:server": "node build/dev-server",
     "dev:server-debug": "node --debug build/dev-server",
     "dev:client": "./node_modules/.bin/webpack-dev-server --colors --inline --content-base dist/",
-    "test": "./node_modules/.bin/karma start ./test/karma.conf.js"
+    "test": "./node_modules/.bin/karma start ./test/karma.conf.js",
+    "prepublish": "build/prebuild"
   },
   "author": {
     "email": "zxdong@gmail.com",
@@ -39,6 +40,7 @@
     "babel-preset-stage-1": "6.22.0",
     "babel-preset-stage-2": "6.22.0",
     "bootstrap": "3.3.7",
+    "css-loader": "^0.26.1",
     "extract-text-webpack-plugin": "2.0.0-rc.2",
     "jquery": "3.1.1",
     "karma": "1.4.1",
@@ -59,6 +61,9 @@
     "phantomjs-prebuilt": "2.1.14",
     "raw-loader": "0.5.1",
     "react-addons-test-utils": "15.4.2",
+    "style-loader": "^0.13.1",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^2.5.0",
     "unminified-webpack-plugin": "1.2.0",
     "webpack": "2.2.1",
     "webpack-dev-server": "2.2.1"

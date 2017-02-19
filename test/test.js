@@ -1,9 +1,11 @@
 
-import Add from '../dist/add.js'
+import Dtree from '../dist/react-dicision-tree'
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
+import data from '../src/test.data.js'
+const pack = require('../package.json')
 
-describe('add', function () {
+describe(pack.name, function () {
 
 	let scope, sandboxEl
 
@@ -26,14 +28,13 @@ describe('add', function () {
 			constructor(props) {
 				super(props)
 				this.state = $.extend({}, {
-					a: 0,
-					b: 1
+					data
 				}, _props)
 			}
 
 
 			render() {
-				return <Add {...this.state} />
+				return <Dtree {...this.state} />
 			}
 		}
 
@@ -49,15 +50,11 @@ describe('add', function () {
 	describe('basic', function () {
 
 		it('should 1 + 0 = 1', function(done) {
-			prepare({
-				a: 1
-				,b: 0
-			})
+			prepare()
 			setTimeout(function() {
-				expect($('#sandbox').text()).to.equal('1 + 0 = 1')
+				expect($('.dtree-label-text').length > 1).to.equal(true)
 				done()
 			}, 100)
-
 		})
 
 	})

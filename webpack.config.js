@@ -3,6 +3,10 @@ const OpenBrowserPlugin = require('open-browser-webpack-plugin')
 const configSys = require('./build/config')
 const UnminifiedWebpackPlugin = require('unminified-webpack-plugin')
 const pack = require('./package.json')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const extractTextPlugin = new ExtractTextPlugin({
+  filename: '[name].min.css'
+})
 
 let config = {
   entry: {
@@ -21,15 +25,26 @@ let config = {
     'react-dom': 'ReactDOM'
   },
   module: {
-    rules: [{
-      test: /\.jsx?$/,
-      exclude: /node_modules/,
-      use: ['babel-loader']
-    }]
+    rules: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: ['babel-loader']
+      },
+      {
+        test: /\.styl$/,
+        exclude: /node_modules/,
+        use: ExtractTextPlugin.extract({
+          fallbackLoader: 'style-loader',
+          loader: 'css-loader!stylus-loader'
+        })
+      }
+    ]
   },
   devtool: '#eval-source-map',
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
+    extractTextPlugin,
     new OpenBrowserPlugin({ url: 'http://localhost:' + configSys.port })
   ],
   devServer: {
@@ -76,6 +91,7 @@ if (process.env.NODE_ENV === 'production') {
         warnings: false, // Suppress uglification warnings
       }
     }),
+    extractTextPlugin,
     new UnminifiedWebpackPlugin(),
     new webpack.BannerPlugin({
       banner:
@@ -92,7 +108,7 @@ if (process.env.NODE_ENV === 'production') {
   ]
 
   config.entry = {
-    'add': ['./src/example-lib.jsx']
+    'react-dicision-tree': ['./src/react-dicision-tree.jsx']
   },
 
   config.output = {
@@ -100,7 +116,7 @@ if (process.env.NODE_ENV === 'production') {
     filename: '[name].min.js', //output name
     libraryTarget: 'umd',
     publicPath: '/',
-    library: 'Add'
+    library: 'ReactDicisionTree'
   }
 
   config.externals = {

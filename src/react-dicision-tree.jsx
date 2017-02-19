@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react'
+import './style.styl'
 
-export default class DicisionTree extends React.Component {
+class DicisionTree extends React.Component {
 
 	static propTypes = {
 		data: PropTypes.object.isRequired,
@@ -31,21 +32,22 @@ export default class DicisionTree extends React.Component {
     return this.recDicisionTree(data)
   }
 
-  renderCondition = (condition) => {
+  renderCondition = (root) => {
 
-    let {splitType, value} = condition
+    let {splitType, value} = root
+    if (!splitType) return null
     let cls = 'dtree-condition'
     return (
       <span>
         <span className="dtree-condition-line" />
-        <span className={cls}>{conditionMap[splitType]} {value}</span>
+        <span className={cls}>{splitType} {value}</span>
       </span>
     )
 
   }
 
   toggleChildrenVisible = id => {
-    let showChildrenMap = _.cloneDeep(this.state.showChildrenMap)
+    let showChildrenMap = Object.assign({}, this.state.showChildrenMap)
     showChildrenMap[id] = !showChildrenMap[id]
     this.setState({
       showChildrenMap
@@ -56,7 +58,7 @@ export default class DicisionTree extends React.Component {
     if (side === 1 || !children) return null
     let visible = this.state.showChildrenMap[id]
     let title = visible ? '收起' : '展开'
-    let type = visible ? '▲' : '▲'
+    let type = visible ? '▲' : '▼'
     return (
       <span
         title={title}
@@ -92,7 +94,7 @@ export default class DicisionTree extends React.Component {
     let childrenVisible = showChildrenMap[id]
     let cls = 'dtree-cell ' +
       `dtree-lv${level}` +
-      ` ${className} ${chhildren ? 'has-children' : 'no-children'}` +
+      ` ${className} ${children ? 'has-children' : 'no-children'}` +
       `${childrenVisible ? ' dtree-children-visible' : ''}`
 
     let labelDom
@@ -108,10 +110,10 @@ export default class DicisionTree extends React.Component {
       <div className={cls}>
         <div>
           <span className="dtree-label">
-            {condition ? this.renderCondition(condition) : null}
+            {this.renderCondition(root)}
             <span className="dtree-label-text iblock elli">
               {renderCaret(side, children, id, this.toggleChildrenVisible)}
-              {renderTitle(labelText, labelDom)}
+              {renderTitle(label, labelDom)}
             </span>
           </span>
         </div>
@@ -142,3 +144,5 @@ export default class DicisionTree extends React.Component {
   }
 
 }
+
+module.exports = exports.default = DicisionTree
