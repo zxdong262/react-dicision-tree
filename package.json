@@ -1,6 +1,6 @@
 {
   "name": "react-dicision-tree",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "react dicision tree component",
   "main": "dist/react-dicision-tree.min.js",
   "scripts": {
