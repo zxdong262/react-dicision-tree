@@ -9,8 +9,7 @@
     "dev:server": "node build/dev-server",
     "dev:server-debug": "node --debug build/dev-server",
     "dev:client": "./node_modules/.bin/webpack-dev-server --colors --inline --content-base dist/",
-    "test": "./node_modules/.bin/karma start ./test/karma.conf.js",
-    "prepublish": "build/prebuild"
+    "test": "./node_modules/.bin/karma start ./test/karma.conf.js"
   },
   "author": {
     "email": "zxdong@gmail.com",
