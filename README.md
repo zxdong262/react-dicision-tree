@@ -52,12 +52,12 @@ check [test.data.js](src/test.data.js) for data structure
 
 more props, read [src](src/react-dicision-tree.jsx) for detail
 ```
-    showAllChildren: PropTypes.bool,
-    caretRender: PropTypes.func,
-    conditionRender: PropTypes.func,
-    renderYesLabel: PropTypes.func,
-    renderNoLabel: PropTypes.func,
-    renderTitle: PropTypes.func
+showAllChildren: PropTypes.bool,
+caretRender: PropTypes.func,
+conditionRender: PropTypes.func,
+renderYesLabel: PropTypes.func,
+renderNoLabel: PropTypes.func,
+renderTitle: PropTypes.func
 
 ```
 
